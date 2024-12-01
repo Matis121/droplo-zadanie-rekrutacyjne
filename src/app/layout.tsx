@@ -20,7 +20,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} antialiased`}>{children}</body>
+      <body
+        className={`${inter.variable} antialiased mt-12 flex justify-center`}
+      >
+        <div className="container">{children}</div>
+      </body>
     </html>
   );
 }
