@@ -1,3 +1,4 @@
+import { useMenuActions } from "@/app/hooks/useMenuActions";
 import { Dispatch, SetStateAction, useState } from "react";
 
 function MenuForm({
@@ -84,15 +85,11 @@ export function AddMenuItemForm({
 export function EditMenuItemForm({
   setIsFormVisible,
   itemData,
-  handleUpdateItem,
 }: {
   setIsFormVisible: Dispatch<SetStateAction<boolean>>;
   itemData: { id: string; name: string; link: string };
-  handleUpdateItem: (
-    id: string,
-    updatedData: { name: string; link: string }
-  ) => void;
 }) {
+  const { handleUpdateItem } = useMenuActions();
   const [name, setName] = useState(itemData.name);
   const [link, setLink] = useState(itemData.link);
 

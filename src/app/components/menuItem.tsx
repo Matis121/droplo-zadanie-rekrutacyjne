@@ -1,28 +1,24 @@
 import Image from "next/image";
 import { AddMenuItemForm, EditMenuItemForm } from "./menuForms/menuForms";
 import { useState } from "react";
+import { useMenuActions } from "../hooks/useMenuActions";
 
 export default function MenuItem({
   name,
   link,
   id,
-  handleDeleteItem,
-  handleUpdateItem,
 }: {
   name: string;
   link: string;
   id: string;
-  handleDeleteItem: (id: string) => void;
-  handleUpdateItem: (
-    id: string,
-    updatedData: { name: string; link: string }
-  ) => void;
 }) {
   const [activeForm, setActiveForm] = useState<"add" | "edit" | null>(null);
 
   const handleToggleForm = (formType: "add" | "edit") => {
     setActiveForm((prevState) => (prevState === formType ? null : formType));
   };
+
+  const { handleDeleteItem } = useMenuActions();
 
   return (
     <>
@@ -67,7 +63,6 @@ export default function MenuItem({
           <EditMenuItemForm
             itemData={{ id, name, link }}
             setIsFormVisible={() => setActiveForm(null)}
-            handleUpdateItem={handleUpdateItem}
           />
         </div>
       )}

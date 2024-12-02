@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { MenuProvider } from "./context/menuContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -20,11 +21,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.variable} antialiased my-20 flex justify-center`}
-      >
-        <div className="container">{children}</div>
-      </body>
+      <MenuProvider>
+        <body
+          className={`${inter.variable} antialiased my-20 flex justify-center`}
+        >
+          <div className="container">{children}</div>
+        </body>
+      </MenuProvider>
     </html>
   );
 }
