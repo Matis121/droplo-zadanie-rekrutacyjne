@@ -59,7 +59,6 @@ const dummyData: MenuItem[] = [
 
 export default function Menu() {
   const [menuItems, setMenuItems] = useState<MenuItem[]>(dummyData);
-  console.log(menuItems);
 
   return (
     <>

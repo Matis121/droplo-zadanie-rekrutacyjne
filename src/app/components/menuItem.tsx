@@ -1,5 +1,5 @@
 import Image from "next/image";
-import MenuItemForm from "./menuItemForm";
+import { AddMenuItemForm, EditMenuItemForm } from "./menuForms/menuForms";
 import { useState } from "react";
 
 export default function MenuItem({
@@ -7,13 +7,22 @@ export default function MenuItem({
   link,
   id,
   handleDeleteItem,
+  handleUpdateItem,
 }: {
   name: string;
   link: string;
   id: string;
   handleDeleteItem: (id: string) => void;
+  handleUpdateItem: (
+    id: string,
+    updatedData: { name: string; link: string }
+  ) => void;
 }) {
-  const [isVisibleForm, setIsVisibleForm] = useState(false);
+  const [activeForm, setActiveForm] = useState<"add" | "edit" | null>(null);
+
+  const handleToggleForm = (formType: "add" | "edit") => {
+    setActiveForm((prevState) => (prevState === formType ? null : formType));
+  };
 
   return (
     <>
@@ -33,21 +42,33 @@ export default function MenuItem({
             >
               Usuń
             </button>
-            <button className="py-[10px] px-[16px] border-r text-sm font-semibold color-[#344054]">
+            <button
+              className="py-[10px] px-[16px] border-r text-sm font-semibold color-[#344054]"
+              onClick={() => handleToggleForm("edit")}
+            >
               Edytuj
             </button>
             <button
               className="py-[10px] px-[16px] text-sm font-semibold color-[#344054]"
-              onClick={() => setIsVisibleForm(true)}
+              onClick={() => handleToggleForm("add")}
             >
               Dodaj pozycję menu
             </button>
           </div>
         </div>
       </div>
-      {isVisibleForm && (
+      {activeForm === "add" && (
         <div className="pl-[64px] pr-[24px] py-[16px]">
-          <MenuItemForm setIsFormVisible={setIsVisibleForm} />
+          <AddMenuItemForm setIsFormVisible={() => setActiveForm(null)} />
+        </div>
+      )}
+      {activeForm === "edit" && (
+        <div className="px-[24px] py-[16px]">
+          <EditMenuItemForm
+            itemData={{ id, name, link }}
+            setIsFormVisible={() => setActiveForm(null)}
+            handleUpdateItem={handleUpdateItem}
+          />
         </div>
       )}
     </>

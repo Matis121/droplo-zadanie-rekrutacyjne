@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
-import MenuItemForm from "./menuItemForm";
+import { AddMenuItemForm } from "./menuForms/menuForms";
 
 export default function EmptyMenu() {
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -8,7 +8,7 @@ export default function EmptyMenu() {
   return (
     <>
       {isFormVisible ? (
-        <MenuItemForm setIsFormVisible={setIsFormVisible} />
+        <AddMenuItemForm setIsFormVisible={setIsFormVisible} />
       ) : (
         <div className="bg-[--bg-secondary] flex items-center justify-center flex-col gap-[24px] py-[24px] rounded-lg border">
           <div className="flex items-center flex-col gap-1">

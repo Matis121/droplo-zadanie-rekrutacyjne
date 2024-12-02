@@ -1,6 +1,6 @@
 import { useState } from "react";
 import MenuItem from "./menuItem";
-import MenuItemForm from "./menuItemForm";
+import { AddMenuItemForm } from "./menuForms/menuForms";
 import { Dispatch, SetStateAction } from "react";
 
 export default function MenuList({
@@ -30,6 +30,32 @@ export default function MenuList({
     setMenuItems(updatedMenu);
   };
 
+  const handleUpdateItem = (
+    id: string,
+    updatedData: { name: string; link: string }
+  ) => {
+    const updateItem = (
+      menu: MenuItem[],
+      id: string,
+      updatedData: { name: string; link: string }
+    ): MenuItem[] => {
+      return menu.map((item) => {
+        if (item.id === id) {
+          return { ...item, ...updatedData };
+        }
+        if (item.subMenu) {
+          return {
+            ...item,
+            subMenu: updateItem(item.subMenu, id, updatedData),
+          };
+        }
+        return item;
+      });
+    };
+    const updatedMenu = updateItem(menuItems, id, updatedData);
+    setMenuItems(updatedMenu);
+  };
+
   const renderMenu = (items: MenuItem[]) => {
     return items.map((item) => (
       <div key={item.id}>
@@ -38,6 +64,7 @@ export default function MenuList({
           name={item.name}
           link={item.link}
           id={item.id}
+          handleUpdateItem={handleUpdateItem}
         />
         {item.subMenu && (
           <div className="ml-16">{renderMenu(item.subMenu)}</div>
@@ -52,7 +79,7 @@ export default function MenuList({
         <div>{renderMenu(menuItems)}</div>
         {isVisibleForm && (
           <div className="py-[16px] px-[24px] bg-[#F9FAFB]">
-            <MenuItemForm setIsFormVisible={setisVisibleForm} />
+            <AddMenuItemForm setIsFormVisible={setisVisibleForm} />
           </div>
         )}
         <div className="px-[24px] py-[20px] bg-[#f5f5f5]">
