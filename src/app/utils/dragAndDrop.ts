@@ -1,7 +1,6 @@
 import { arrayMove } from "@dnd-kit/sortable";
 import { useMenu } from "../context/menuContext";
 
-// Export the function that takes `menuItems` and `setMenuItems` as parameters
 export const handleDragEnd = (
   event: any,
   menuItems: any[],
