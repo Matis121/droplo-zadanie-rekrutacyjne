@@ -2,21 +2,11 @@ import { useState } from "react";
 import MenuItem from "./menuItem";
 import { AddMenuItemForm } from "./menuForms/menuForms";
 import { useMenu } from "../context/menuContext";
+import { renderMenu } from "../utils/renderMenu";
 
 export default function MenuList() {
   const { menuItems } = useMenu();
   const [isVisibleForm, setisVisibleForm] = useState(false);
-
-  const renderMenu = (items: MenuItem[]) => {
-    return items.map((item) => (
-      <div key={item.id}>
-        <MenuItem name={item.name} link={item.link} id={item.id} />
-        {item.subMenu && (
-          <div className="ml-16">{renderMenu(item.subMenu)}</div>
-        )}
-      </div>
-    ));
-  };
 
   return (
     <>

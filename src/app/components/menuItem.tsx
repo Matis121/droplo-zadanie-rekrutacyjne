@@ -3,15 +3,13 @@ import { AddMenuItemForm, EditMenuItemForm } from "./menuForms/menuForms";
 import { useState } from "react";
 import { useMenuActions } from "../hooks/useMenuActions";
 
-export default function MenuItem({
-  name,
-  link,
-  id,
-}: {
+type MenuItem = {
+  id: string;
   name: string;
   link: string;
-  id: string;
-}) {
+};
+
+export default function MenuItem({ id, name, link }: MenuItem) {
   const [activeForm, setActiveForm] = useState<"add" | "edit" | null>(null);
 
   const handleToggleForm = (formType: "add" | "edit") => {
