@@ -5,9 +5,13 @@ import { useState } from "react";
 export default function MenuItem({
   name,
   link,
+  id,
+  handleDeleteItem,
 }: {
   name: string;
   link: string;
+  id: string;
+  handleDeleteItem: (id: string) => void;
 }) {
   const [isVisibleForm, setIsVisibleForm] = useState(false);
 
@@ -23,7 +27,10 @@ export default function MenuItem({
         </div>
         <div className="flex ml-auto">
           <div className="border rounded-lg flex">
-            <button className="py-[10px] px-[16px] border-r text-sm font-semibold color-[#344054]">
+            <button
+              className="py-[10px] px-[16px] border-r text-sm font-semibold color-[#344054]"
+              onClick={() => handleDeleteItem(id)}
+            >
               Usuń
             </button>
             <button className="py-[10px] px-[16px] border-r text-sm font-semibold color-[#344054]">
@@ -39,7 +46,7 @@ export default function MenuItem({
         </div>
       </div>
       {isVisibleForm && (
-        <div className="px-[64px] py-[16px]">
+        <div className="pl-[64px] pr-[24px] py-[16px]">
           <MenuItemForm setIsFormVisible={setIsVisibleForm} />
         </div>
       )}

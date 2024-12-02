@@ -1,14 +1,44 @@
 import { useState } from "react";
 import MenuItem from "./menuItem";
 import MenuItemForm from "./menuItemForm";
+import { Dispatch, SetStateAction } from "react";
 
-export default function MenuList({ menuItems }: { menuItems: MenuItem[] }) {
+export default function MenuList({
+  menuItems,
+  setMenuItems,
+}: {
+  menuItems: MenuItem[];
+  setMenuItems: Dispatch<SetStateAction<MenuItem[]>>;
+}) {
   const [isVisibleForm, setisVisibleForm] = useState(false);
 
+  const handleDeleteItem = (id: string) => {
+    const deleteItem = (menu: MenuItem[], id: string): MenuItem[] => {
+      return menu
+        .filter((item) => item.id !== id)
+        .map((item) => {
+          if (item.subMenu) {
+            return {
+              ...item,
+              subMenu: deleteItem(item.subMenu, id),
+            };
+          }
+          return item;
+        });
+    };
+    const updatedMenu = deleteItem(menuItems, id);
+    setMenuItems(updatedMenu);
+  };
+
   const renderMenu = (items: MenuItem[]) => {
-    return items.map((item, index) => (
-      <div key={index}>
-        <MenuItem name={item.name} link={item.link} />
+    return items.map((item) => (
+      <div key={item.id}>
+        <MenuItem
+          handleDeleteItem={handleDeleteItem}
+          name={item.name}
+          link={item.link}
+          id={item.id}
+        />
         {item.subMenu && (
           <div className="ml-16">{renderMenu(item.subMenu)}</div>
         )}
