@@ -53,7 +53,10 @@ export default function MenuItem({ id, name, link }: MenuItem) {
       </div>
       {activeForm === "add" && (
         <div className="pl-[64px] pr-[24px] py-[16px]">
-          <AddMenuItemForm setIsFormVisible={() => setActiveForm(null)} />
+          <AddMenuItemForm
+            parentId={id}
+            setIsFormVisible={() => setActiveForm(null)}
+          />
         </div>
       )}
       {activeForm === "edit" && (

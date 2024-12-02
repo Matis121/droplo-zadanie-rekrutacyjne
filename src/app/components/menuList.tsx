@@ -14,7 +14,10 @@ export default function MenuList() {
         <div>{renderMenu(menuItems)}</div>
         {isVisibleForm && (
           <div className="py-[16px] px-[24px] bg-[#F9FAFB]">
-            <AddMenuItemForm setIsFormVisible={setisVisibleForm} />
+            <AddMenuItemForm
+              parentId={null}
+              setIsFormVisible={setisVisibleForm}
+            />
           </div>
         )}
         <div className="px-[24px] py-[20px] bg-[#f5f5f5]">

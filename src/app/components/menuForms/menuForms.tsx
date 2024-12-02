@@ -45,14 +45,18 @@ function MenuForm({
 }
 
 export function AddMenuItemForm({
+  parentId,
   setIsFormVisible,
 }: {
+  parentId: string | null;
   setIsFormVisible: Dispatch<SetStateAction<boolean>>;
 }) {
+  const { handleAddItem } = useMenuActions();
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
 
   const handleSubmit = () => {
+    handleAddItem(parentId, name, link);
     setIsFormVisible(false);
   };
 

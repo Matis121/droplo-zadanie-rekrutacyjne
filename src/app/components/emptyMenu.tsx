@@ -8,7 +8,7 @@ export default function EmptyMenu() {
   return (
     <>
       {isFormVisible ? (
-        <AddMenuItemForm setIsFormVisible={setIsFormVisible} />
+        <AddMenuItemForm parentId={null} setIsFormVisible={setIsFormVisible} />
       ) : (
         <div className="bg-[--bg-secondary] flex items-center justify-center flex-col gap-[24px] py-[24px] rounded-lg border">
           <div className="flex items-center flex-col gap-1">
