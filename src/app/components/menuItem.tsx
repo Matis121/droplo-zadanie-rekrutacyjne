@@ -2,6 +2,8 @@ import Image from "next/image";
 import { AddMenuItemForm, EditMenuItemForm } from "./menuForms/menuForms";
 import { useState } from "react";
 import { useMenuActions } from "../hooks/useMenuActions";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 type MenuItem = {
   id: string;
@@ -18,17 +20,24 @@ export default function MenuItem({ id, name, link }: MenuItem) {
 
   const { handleDeleteItem } = useMenuActions();
 
+  // DND-KIT helper functions
+  const { listeners, setNodeRef, transform, transition } = useSortable({ id });
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform),
+  };
+
   return (
-    <>
+    <div style={style} ref={setNodeRef}>
       <div className="bg-white px-[24px] py-[16px] flex items-center border">
-        <div className="p-[10px]">
+        <div className="p-[10px] cursor-pointer" {...listeners}>
           <Image src="/drag-icon.svg" alt="drag icon" width={20} height={20} />
         </div>
         <div className="flex flex-col gap-[6px]">
           <h3 className="text-sm font-semibold color-[#101828]">{name}</h3>
           <p className="text-sm font-normal color-[#475467]">{link}</p>
         </div>
-        <div className="flex ml-auto">
+        <div className="flex ml-auto z-50">
           <div className="border rounded-lg flex">
             <button
               className="py-[10px] px-[16px] border-r text-sm font-semibold color-[#344054]"
@@ -67,6 +76,6 @@ export default function MenuItem({ id, name, link }: MenuItem) {
           />
         </div>
       )}
-    </>
+    </div>
   );
 }

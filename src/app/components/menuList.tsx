@@ -1,17 +1,34 @@
 import { useState } from "react";
-import MenuItem from "./menuItem";
 import { AddMenuItemForm } from "./menuForms/menuForms";
 import { useMenu } from "../context/menuContext";
 import { renderMenu } from "../utils/renderMenu";
+import {
+  closestCorners,
+  DndContext,
+  PointerSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import { handleDragEnd } from "../utils/dragAndDrop";
 
 export default function MenuList() {
-  const { menuItems } = useMenu();
+  const { menuItems, setMenuItems } = useMenu();
+
   const [isVisibleForm, setisVisibleForm] = useState(false);
+
+  const sensors = useSensors(useSensor(PointerSensor), useSensor(TouchSensor));
 
   return (
     <>
       <div className="border rounded-lg overflow-hidden shadow-sm bg-[#F9FAFB]">
-        <div>{renderMenu(menuItems)}</div>
+        <DndContext
+          onDragEnd={(event) => handleDragEnd(event, menuItems, setMenuItems)}
+          collisionDetection={closestCorners}
+          sensors={sensors}
+        >
+          {renderMenu(menuItems)}
+        </DndContext>
         {isVisibleForm && (
           <div className="py-[16px] px-[24px] bg-[#F9FAFB]">
             <AddMenuItemForm
