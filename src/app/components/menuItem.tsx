@@ -5,6 +5,30 @@ import { useMenuActions } from "../hooks/useMenuActions";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { MenuItemProps } from "../types/types";
+import { ActionButtons as ActionButtonsType } from "../types/types";
+
+const ActionButtons = ({ onDelete, onEdit, onAdd }: ActionButtonsType) => (
+  <div className="border border-[--border-color-primary] rounded-lg flex">
+    <button
+      className="py-[10px] px-[16px] border-r border-[--border-color-primary] text-sm font-semibold text-[--text-secondary]"
+      onClick={onDelete}
+    >
+      Usuń
+    </button>
+    <button
+      className="py-[10px] px-[16px] border-r border-[--border-color-primary] text-sm font-semibold text-[--text-secondary]"
+      onClick={onEdit}
+    >
+      Edytuj
+    </button>
+    <button
+      className="py-[10px] px-[16px] text-sm font-semibold text-[--text-secondary]"
+      onClick={onAdd}
+    >
+      Dodaj pozycję menu
+    </button>
+  </div>
+);
 
 export default function MenuItem({
   id,
@@ -14,13 +38,9 @@ export default function MenuItem({
 }: MenuItemProps) {
   const [activeForm, setActiveForm] = useState<"add" | "edit" | null>(null);
 
-  const handleToggleForm = (formType: "add" | "edit") => {
-    setActiveForm((prevState) => (prevState === formType ? null : formType));
-  };
-
   const { handleDeleteItem } = useMenuActions();
 
-  // DND-KIT functions
+  // DND-KIT logic
   const { listeners, setNodeRef, transform, transition } = useSortable({ id });
   const style = {
     transition,
@@ -44,26 +64,11 @@ export default function MenuItem({
           <p className="text-sm font-normal text-[--text-tertiary]">{link}</p>
         </div>
         <div className="flex ml-auto z-50">
-          <div className="border border-[--border-color-primary] rounded-lg flex">
-            <button
-              className="py-[10px] px-[16px] border-r border-[--border-color-primary] text-sm font-semibold text-[--text-secondary]"
-              onClick={() => handleDeleteItem(id)}
-            >
-              Usuń
-            </button>
-            <button
-              className="py-[10px] px-[16px] border-r border-[--border-color-primary] text-sm font-semibold text-[--text-secondary]"
-              onClick={() => handleToggleForm("edit")}
-            >
-              Edytuj
-            </button>
-            <button
-              className="py-[10px] px-[16px] text-sm font-semibold text-[--text-secondary]"
-              onClick={() => handleToggleForm("add")}
-            >
-              Dodaj pozycję menu
-            </button>
-          </div>
+          <ActionButtons
+            onDelete={() => handleDeleteItem(id)}
+            onEdit={() => setActiveForm("edit")}
+            onAdd={() => setActiveForm("add")}
+          />
         </div>
       </div>
       {activeForm === "add" && (

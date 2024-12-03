@@ -15,6 +15,13 @@ export type MenuItemProps = {
   hasSubMenu: boolean | undefined;
 };
 
+//Action Buttons in Menu item
+export type ActionButtons = {
+  onDelete: () => void;
+  onEdit: () => void;
+  onAdd: () => void;
+};
+
 // Form types
 export type MenuItemFormProps = {
   setIsFormVisible: Dispatch<SetStateAction<boolean>>;
