@@ -9,9 +9,10 @@ type MenuItem = {
   id: string;
   name: string;
   link: string;
+  hasSubMenu: boolean;
 };
 
-export default function MenuItem({ id, name, link }: MenuItem) {
+export default function MenuItem({ id, name, link, hasSubMenu }: MenuItem) {
   const [activeForm, setActiveForm] = useState<"add" | "edit" | null>(null);
 
   const handleToggleForm = (formType: "add" | "edit") => {
@@ -27,32 +28,40 @@ export default function MenuItem({ id, name, link }: MenuItem) {
     transform: CSS.Transform.toString(transform),
   };
 
+  console.log(hasSubMenu);
+
   return (
     <div style={style} ref={setNodeRef}>
-      <div className="bg-white px-[24px] py-[16px] flex items-center border">
+      <div
+        className={`bg-white px-[24px] py-[16px] flex gap-[4px] items-center border border-[--border-color-secondary] mt-[-1px] ${
+          hasSubMenu && "rounded-bl-lg"
+        }`}
+      >
         <div className="p-[10px] cursor-pointer" {...listeners}>
           <Image src="/drag-icon.svg" alt="drag icon" width={20} height={20} />
         </div>
-        <div className="flex flex-col gap-[6px]">
-          <h3 className="text-sm font-semibold color-[#101828]">{name}</h3>
-          <p className="text-sm font-normal color-[#475467]">{link}</p>
+        <div className={`flex flex-col ${link ? "gap-[6px]" : "gap-0"}`}>
+          <h3 className="text-sm font-semibold text-[--text-primary]">
+            {name}
+          </h3>
+          <p className="text-sm font-normal text-[--text-tertiary]">{link}</p>
         </div>
         <div className="flex ml-auto z-50">
-          <div className="border rounded-lg flex">
+          <div className="border border-[--border-color-primary] rounded-lg flex">
             <button
-              className="py-[10px] px-[16px] border-r text-sm font-semibold color-[#344054]"
+              className="py-[10px] px-[16px] border-r border-[--border-color-primary] text-sm font-semibold text-[--text-secondary]"
               onClick={() => handleDeleteItem(id)}
             >
               Usuń
             </button>
             <button
-              className="py-[10px] px-[16px] border-r text-sm font-semibold color-[#344054]"
+              className="py-[10px] px-[16px] border-r border-[--border-color-primary] text-sm font-semibold text-[--text-secondary]"
               onClick={() => handleToggleForm("edit")}
             >
               Edytuj
             </button>
             <button
-              className="py-[10px] px-[16px] text-sm font-semibold color-[#344054]"
+              className="py-[10px] px-[16px] text-sm font-semibold text-[--text-secondary]"
               onClick={() => handleToggleForm("add")}
             >
               Dodaj pozycję menu
@@ -61,7 +70,7 @@ export default function MenuItem({ id, name, link }: MenuItem) {
         </div>
       </div>
       {activeForm === "add" && (
-        <div className="pl-[64px] pr-[24px] py-[16px]">
+        <div className="pl-[64px] pr-[24px] py-[16px] bg-[--bg-secondary]">
           <AddMenuItemForm
             parentId={id}
             setIsFormVisible={() => setActiveForm(null)}
@@ -69,7 +78,7 @@ export default function MenuItem({ id, name, link }: MenuItem) {
         </div>
       )}
       {activeForm === "edit" && (
-        <div className="px-[24px] py-[16px]">
+        <div className="px-[24px] py-[16px] bg-[--bg-secondary]">
           <EditMenuItemForm
             itemData={{ id, name, link }}
             setIsFormVisible={() => setActiveForm(null)}

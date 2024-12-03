@@ -21,7 +21,7 @@ export default function MenuList() {
 
   return (
     <>
-      <div className="border rounded-lg overflow-hidden shadow-sm bg-[#F9FAFB]">
+      <div className="border border-[--border-color-primary] bg-[--bg-secondary] rounded-lg overflow-hidden">
         <DndContext
           onDragEnd={(event) => handleDragEnd(event, menuItems, setMenuItems)}
           collisionDetection={closestCorners}
@@ -30,16 +30,16 @@ export default function MenuList() {
           {renderMenu(menuItems)}
         </DndContext>
         {isVisibleForm && (
-          <div className="py-[16px] px-[24px] bg-[#F9FAFB]">
+          <div className="py-[16px] px-[24px] bg-[--bg-secondary]">
             <AddMenuItemForm
               parentId={null}
               setIsFormVisible={setisVisibleForm}
             />
           </div>
         )}
-        <div className="px-[24px] py-[20px] bg-[#f5f5f5]">
+        <div className="px-[24px] py-[20px] bg-[--background] border-t border-[--border-color-primary] mt-[-1px]">
           <button
-            className="border py-[10px] px-[14px] rounded-lg bg-white shadow-sm text-sm font-semibold color-[#344054]"
+            className="border border-[--border-color-primary] py-[10px] px-[14px] rounded-lg shadow-xs text-[--text-secondary] text-sm font-semibold bg-white"
             onClick={() => setisVisibleForm(true)}
           >
             Dodaj pozycję menu
