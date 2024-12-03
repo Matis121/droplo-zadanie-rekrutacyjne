@@ -25,7 +25,9 @@ export default function RootLayout({
         <body
           className={`${inter.variable} antialiased my-20 flex justify-center`}
         >
-          <div className="container">{children}</div>
+          <div className="container flex items-center justify-center">
+            {children}
+          </div>
         </body>
       </MenuProvider>
     </html>

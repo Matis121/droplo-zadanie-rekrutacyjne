@@ -50,7 +50,7 @@ export default function MenuItem({
   return (
     <div style={style} ref={setNodeRef}>
       <div
-        className={`bg-white px-[24px] py-[16px] flex gap-[4px] items-center border border-[--border-color-secondary] mt-[-1px] ${
+        className={`bg-white px-[24px] py-[16px] grid grid-cols-[40px_minmax(0,1fr)_330px] gap-[4px] items-center border border-[--border-color-secondary] mt-[-1px] ${
           hasSubMenu && "rounded-bl-lg"
         }`}
       >
@@ -58,12 +58,14 @@ export default function MenuItem({
           <Image src="/drag-icon.svg" alt="drag icon" width={20} height={20} />
         </div>
         <div className={`flex flex-col ${link ? "gap-[6px]" : "gap-0"}`}>
-          <h3 className="text-sm font-semibold text-[--text-primary]">
+          <h3 className="text-sm font-semibold text-[--text-primary] truncate">
             {name}
           </h3>
-          <p className="text-sm font-normal text-[--text-tertiary]">{link}</p>
+          <p className="text-sm font-normal text-[--text-tertiary] truncate ">
+            {link}
+          </p>
         </div>
-        <div className="flex ml-auto z-50">
+        <div className="flex ml-auto">
           <ActionButtons
             onDelete={() => handleDeleteItem(id)}
             onEdit={() => setActiveForm("edit")}
