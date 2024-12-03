@@ -20,7 +20,7 @@ export default function EmptyMenu() {
             </p>
           </div>
           <button
-            className="font-semibold text-sm text-white px-[14px] py-[10px] bg-[--bg-purple] border border-[--bg-purple] rounded-lg shadow-xs flex gap-[4px] items-center"
+            className="font-semibold text-sm text-white px-[14px] py-[10px] bg-[--bg-purple] border border-[--bg-purple] rounded-lg shadow-xs flex gap-[6px] items-center"
             onClick={() => setIsFormVisible(!isFormVisible)}
           >
             <Image

@@ -11,7 +11,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Droplo - zadanie rekrutacyjne",
-  description: "Created by Mateusz Jarząbek",
+  description: "Stworzone przez Mateusza Jarząbek",
 };
 
 export default function RootLayout({

@@ -23,7 +23,7 @@ export default function MenuList() {
     <>
       <div className="border border-[--border-color-primary] bg-[--bg-secondary] rounded-lg overflow-hidden">
         <DndContext
-          onDragEnd={(event) => handleDragEnd(event, menuItems, setMenuItems)}
+          onDragEnd={(event) => handleDragEnd(event, setMenuItems)}
           collisionDetection={closestCorners}
           sensors={sensors}
         >

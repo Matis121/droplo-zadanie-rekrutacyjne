@@ -21,14 +21,12 @@ export default function MenuItem({ id, name, link, hasSubMenu }: MenuItem) {
 
   const { handleDeleteItem } = useMenuActions();
 
-  // DND-KIT helper functions
+  // DND-KIT functions
   const { listeners, setNodeRef, transform, transition } = useSortable({ id });
   const style = {
     transition,
     transform: CSS.Transform.toString(transform),
   };
-
-  console.log(hasSubMenu);
 
   return (
     <div style={style} ref={setNodeRef}>
