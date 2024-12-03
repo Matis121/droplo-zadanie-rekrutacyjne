@@ -4,15 +4,14 @@ import { useState } from "react";
 import { useMenuActions } from "../hooks/useMenuActions";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { MenuItemProps } from "../types/types";
 
-type MenuItem = {
-  id: string;
-  name: string;
-  link: string;
-  hasSubMenu: boolean;
-};
-
-export default function MenuItem({ id, name, link, hasSubMenu }: MenuItem) {
+export default function MenuItem({
+  id,
+  name,
+  link,
+  hasSubMenu,
+}: MenuItemProps) {
   const [activeForm, setActiveForm] = useState<"add" | "edit" | null>(null);
 
   const handleToggleForm = (formType: "add" | "edit") => {

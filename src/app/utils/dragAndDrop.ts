@@ -1,27 +1,26 @@
 import { arrayMove } from "@dnd-kit/sortable";
-
-type ItemAndParent = {
-  item: any;
-  parent: any[];
-  parentIndex: number;
-} | null;
+import { ItemAndParent, MenuItem } from "../types/types";
+import { DragEndEvent } from "@dnd-kit/core";
 
 export const handleDragEnd = (
-  event: any,
-  setMenuItems: React.Dispatch<React.SetStateAction<any[]>>
+  event: DragEndEvent,
+  setMenuItems: React.Dispatch<React.SetStateAction<MenuItem[]>>
 ) => {
   const { active, over } = event;
 
   if (!active || !over || active.id === over.id) return;
 
-  const deepCloneMenu = (menu: any[]): any[] => {
+  const deepCloneMenu = (menu: MenuItem[]): MenuItem[] => {
     return menu.map((item) => ({
       ...item,
       subMenu: item.subMenu ? deepCloneMenu(item.subMenu) : undefined,
     }));
   };
 
-  const findItemAndParent = (items: any[], id: string): ItemAndParent => {
+  const findItemAndParent = (
+    items: MenuItem[],
+    id: string
+  ): ItemAndParent | null => {
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
       if (item.id === id) return { item, parent: items, parentIndex: i };
@@ -36,8 +35,8 @@ export const handleDragEnd = (
   setMenuItems((currentMenu) => {
     const updatedMenu = deepCloneMenu(currentMenu);
 
-    const activeItem = findItemAndParent(updatedMenu, active.id);
-    const overItem = findItemAndParent(updatedMenu, over.id);
+    const activeItem = findItemAndParent(updatedMenu, active.id as string);
+    const overItem = findItemAndParent(updatedMenu, over.id as string);
 
     if (!activeItem || !overItem) return currentMenu;
 

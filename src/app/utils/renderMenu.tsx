@@ -1,11 +1,12 @@
 import MenuItem from "../components/menuItem";
+import { MenuItem as MenuItemType } from "../types/types";
 
 import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-export const renderMenu = (items: MenuItem[]) => {
+export const renderMenu = (items: MenuItemType[]) => {
   return items.map((item) => (
     <div key={item.id} className="mr-[-1px] ml-[-1px]">
       <SortableContext items={items} strategy={verticalListSortingStrategy}>
